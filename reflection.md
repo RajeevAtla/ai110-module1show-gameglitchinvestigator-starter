@@ -2,7 +2,7 @@
 
 ## 1. What was broken when you started?
 
-The game loaded, but it behaved inconsistently as soon as I started testing it through the live Streamlit app. The first obvious bug was that the hint text was backwards: when my guess was below the debug secret, the app told me to go lower instead of higher. I also found that the app converted the secret number to a string on some turns, which made comparisons inconsistent and produced nonsense hint behavior. On top of that, the attempt counter started off by one, the reset flow hard-coded a `1..100` secret even when difficulty changed, and the real logic was still duplicated inside `app.py` instead of being refactored into `logic_utils.py`.
+The game loaded in Streamlit, but it did not behave like a reliable number guessing game once I started testing it. I expected the hint system to guide me toward the secret number, but when my guess was below the debug secret, the app incorrectly told me to go lower instead of higher. I expected each guess to be compared consistently as a number, but the app sometimes converted the secret number to a string, which caused broken comparisons and misleading outcomes. I also expected the attempt counter and reset flow to match the selected difficulty, but attempts started off by one and the new-game path hard-coded a `1..100` secret even after difficulty changes. Finally, I expected the refactored logic to live in `logic_utils.py`, but the real game behavior was still duplicated in `app.py`, so the codebase was not organized the way the assignment described.
 
 ---
 

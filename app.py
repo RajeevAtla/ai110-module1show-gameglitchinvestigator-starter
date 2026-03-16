@@ -40,8 +40,8 @@ st.sidebar.caption(f"Range: {low} to {high}")
 st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
 
 if "game_difficulty" not in st.session_state:
-    # FIX: Persist difficulty-specific state in session_state so reruns do not
-    # create a new secret number unexpectedly.
+    # FIX: After using AI to inspect the rerun behavior, I moved the game state
+    # into session_state so the secret number does not reset unexpectedly.
     reset_game(low, high, difficulty)
 elif st.session_state.game_difficulty != difficulty:
     reset_game(low, high, difficulty)
@@ -63,8 +63,8 @@ new_game = st.button("New Game 🔁")
 show_hint = st.checkbox("Show hint", value=True)
 
 if new_game:
-    # FIX: Reset all tracked state and keep the new secret inside the selected
-    # difficulty range instead of hard-coding 1..100.
+    # FIX: AI helped point to the reset path, and I updated it so a new game
+    # respects the selected difficulty instead of hard-coding 1..100.
     reset_game(low, high, difficulty)
     st.success("New game started.")
     st.rerun()
@@ -87,8 +87,8 @@ if submit:
     elif not (low <= guess_int <= high):
         st.error(f"Enter a number between {low} and {high}.")
     else:
-        # FIX: Count only valid guesses so attempt tracking and score math stay
-        # aligned with the actual turns the player took.
+        # FIX: After tracing the bug with AI assistance, I changed attempts to
+        # increment only for valid guesses so score and attempts stay aligned.
         st.session_state.attempts += 1
         st.session_state.history.append(guess_int)
 
